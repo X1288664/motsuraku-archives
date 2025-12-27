@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理部メンバー紹介 - もつ楽公式サイト</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="my-favicon/favicon.ico">
+    <link rel="apple-touch-icon" href="image/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="site-branding">
+                <a href="index.html" class="site-logo"><img src="image/headerlogo.jpg" alt="もつ楽公式サイト ロゴ"></a>
+                <div>
+                    <h1 class="site-title">もつ楽公式サイト</h1>
+                    <p class="site-description">(Ver.0.8.1-Beta+GhP)</p>
+                </div>
+</div>
+            <nav class="main-navigation" style="display: flex; align-items: center; gap: 10px;">
+
+    <button id="theme-toggle" class="theme-btn" aria-label="ダークモード切替">
+        🌙
+    </button>
+            <nav class="main-navigation">
+                <button class="menu-toggle">メニュー▼</button>
+                <div class="menu-container">
+                    <a href="creators.html">クリエイター</a>
+                    <a href="products.html">ソーシャルメディア</a>
+                    <a href="update.html">更新履歴</a>
+                    <a href="members.html">管理メンバー</a>
+                    <a href="server.html">このサイトについて</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+<main class="site-content">
+        <div class="container">
+            <h2 class="page-title">管理部メンバー紹介</h2>
+            
+            <div id="member-list" class="member-grid">
+                </div>
+
+            <nav id="pagination" class="pagination-container" aria-label="ページナビゲーション"></nav>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="server.html">このサイトについて</a>
+                <span class="footer-social-icons">
+                    <a href="https://www.youtube.com/@motsulakuradio"><img src="image/YT-Logo.png" alt="Youtube"></a>
+                    <a href="https://line.me/ti/g2/fNG0xLERQMhb2DdxRePYU7AVBeMGdDMT3Gbkqg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"><img src="image/LINE.png" alt="LINE"></a>
+                    <a href="http://www.sitemapxml.jp/" target="_blank"><img src="image/sitemapxml.png" width="117" height="14" alt="sitemap.xml自動生成ツール" /></a>
+                </span>
+            </div>
+            <p>© 2025 STUDIO MARX</p>
+        </div>
+    </footer>
+
+    <script src="JavaScript/script.js"></script>
+    
+    <script src="JavaScript/members.js"></script>
+    
+    <script>
+        // 設定
+        const itemsPerPage = 6; // 1ページあたりの表示数
+        const listContainer = document.getElementById('member-list');
+        const paginationContainer = document.getElementById('pagination');
+
+        // URLから現在のページ番号を取得（なければ1ページ目）
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentPage = parseInt(urlParams.get('page')) || 1;
+
+        // 表示処理
+        function renderMembers() {
+            // データが読み込めていない場合のエラー回避
+            if (typeof membersData === 'undefined') {
+                console.error("members.js が読み込まれていません");
+                return;
+            }
+
+            listContainer.innerHTML = ''; // 一旦クリア
+
+            // 表示するデータの範囲を計算
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = membersData.slice(startIndex, endIndex);
+
+            // カードを生成して表示
+            pageData.forEach(member => {
+                // HTMLを生成 (既存のCSSクラス member-card 等を使用)
+                const cardHTML = `
+                    <a href="profile.html?id=${member.id}" class="member-card">
+                        <div class="member-thumbnail">
+                            <img src="${member.image}" alt="${member.name}">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">${member.name}</h3>
+                            <p class="member-description">${member.position}</p>
+                            <p style="font-size:0.8rem; color:#888; margin-top:5px;">${member.message}</p>
+                        </div>
+                    </a>
+                `;
+                listContainer.insertAdjacentHTML('beforeend', cardHTML);
+            });
+
+            renderPagination();
+        }
+
+        // ページネーション生成処理
+        function renderPagination() {
+            paginationContainer.innerHTML = '';
+            const totalPages = Math.ceil(membersData.length / itemsPerPage);
+
+            // ページ数が1以下の場合はボタンを表示しない
+            if (totalPages <= 1) return;
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('a');
+                btn.href = `?page=${i}`; // ページ移動リンク
+                // 既存のCSSクラスがあれば適用、なければstyle.cssに追加した .page-btn を使用
+                btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                btn.textContent = i;
+                paginationContainer.appendChild(btn);
+            }
+        }
+
+        // 実行
+        renderMembers();
+    </script>
+
+</body>
+</html>

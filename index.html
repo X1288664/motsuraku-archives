@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>もつ楽公式サイト アーカイブライブラリ</title>
+    <meta property="og:title" content="もつ楽公式サイト - アーカイブライブラリ">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="#">
+    <meta property="og:image" content="https://x1288664.github.io/zunda0924-motsuraku.github.io/image/OGP.png">
+    <meta property="og:site_name" content="もつ楽公式サイト アーカイブ">
+    <meta property="og:description" content="星のカービィをもっと楽しむ！公式サイトのアーカイブサイトです。">
+    <meta property="og:locale" content="ja_JP">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* アーカイブページ専用の簡易スタイル */
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --accent-color: #007bff;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #121212;
+                --card-bg: #1f1f1f;
+                --text-color: #e0e0e0;
+            }
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 40px;
+        }
+        .header h1 { margin: 0; font-size: 1.8rem; }
+        .header p { color: #cccccc; font-size: 0.9rem; }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .timeline-section {
+            margin-bottom: 50px;
+        }
+        .section-title {
+            font-size: 1.4rem;
+            border-left: 5px solid var(--accent-color);
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            border: 1px solid rgba(128,128,128,0.2);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .ver-badge {
+            display: inline-block;
+            background-color: #666;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+        .ver-latest { background-color: var(--accent-color); }
+        .ver-legacy { background-color: #8e44ad; } /* 紫 */
+
+        .card h3 { margin: 0 0 10px 0; font-size: 1.2rem; }
+        .card p { font-size: 0.9rem; color: #cccccc; margin: 0 0 15px 0; }
+        
+        .open-btn {
+            text-align: center;
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .card:hover .open-btn {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+
+        .note {
+            background-color: rgba(255, 255, 0, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>もつ楽公式サイトアーカイブ</h1>
+        <p>Project A.T.L.A.S - The History of Development</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="note">
+            <strong>⚠️ ご注意：</strong><br>
+            これらは過去のバージョンを保存したアーカイブです。<br>
+            リンク切れ、画像の非表示、レイアウト崩れ、旧ドメインへのリダイレクトなどが含まれる場合がありますが、歴史的資料としてそのまま保存しています。
+        </div>
+<section class="timeline-section">
+            <h2 class="section-title">GitHub Pages Era (Modern)</h2>
+            <div class="grid">
+                <a href="archives/v0.9.x/index.html" class="card">
+                    <div>
+                        <span class="ver-badge ver-latest">Ver.0.9.x</span>
+                        <span class="ver-badge">NEXUS</span>
+                        <h3>Database Integration</h3>
+                        <p>外部データベース[Supabase]連携、404ページ刷新、リリースノート詳細化。</p>
+                        <small style="color:#cccccc;">(Based on v0.9.1)</small>
+                    </div>
+                    <div class="open-btn">開く</div>
+                </a>
+
+                <a href="archives/v0.8.x/index.html" class="card">
+                    <div>
+                        <span class="ver-badge ver-latest">Ver.0.8.x</span>
+                        <span class="ver-badge">ECLIPSE</span>
+                        <h3>Dark Mode Update</h3>
+                        <p>ダークモードの視認性修正、クリエイターページのモバイル対応。</p>
+                    </div>
+                    <div class="open-btn">開く</div>
+                </a>
+
+                <a href="archives/v0.7.x/index.html" class="card">
+                    <div>
+                        <span class="ver-badge ver-latest">Ver.0.7.x</span>
+                        <span class="ver-badge">MOMENTUM</span>
+                        <h3>Design Renewal</h3>
+                        <p>トップページデザイン刷新、ギャラリー機能の実装。</p>
+                    </div>
+                    <div class="open-btn">開く</div>
+                </a>
+
+                <a href="archives/v0.6.x/index.html" class="card">
+                    <div>
+                        <span class="ver-badge ver-latest">Ver.0.6.x</span>
+                        <span class="ver-badge">MATRIX</span>
+                        <h3>Internal Improvements</h3>
+                        <p>内部コード修正、機能改善。</p>
+                    </div>
+                    <div class="open-btn">開く</div>
+                </a>
+
+                <a href="archives/v0.5.x/index.html" class="card">
+                    <div>
+                        <span class="ver-badge ver-latest">Ver.0.5.x</span>
+                        <span class="ver-badge">PROTOCOL</span>
+                        <h3>UI Components</h3>
+                        <p>ボタン風リンク項目の追加。</p>
+                    </div>
+                    <div class="open-btn">開く</div>
+                </a>
+                
+                <a href="archives/v0.4.x-g/index.html" class="card">
+                    <div>
+                        <span class="ver-badge ver-latest">Ver.0.4.x</span>
+                        <span class="ver-badge">VOYAGE</span>
+                        <h3>Visual Update</h3>
+                        <p>画像テキスト内容の変更。GitHub Pages移行後の初期版。</p>
+                    </div>
+                    <div class="open-btn">開く</div>
+                </a>
+            </div>
+        </section>
+
+        <section class="timeline-section">
+            <h2 class="section-title">f5.si[IIS] Era (Legacy)</h2>
+            <div class="grid">
+                <a href="archives/v0.4.x/index.html" class="card">
+                    <div>
+                        <span class="ver-badge ver-legacy">Ver.0.4.x</span>
+                        <span class="ver-badge">VOYAGE-Legacy</span>
+                        <h3>GitHub Pages Migration</h3>
+                        <p>f5.si 時代の最終版。GitHub Pages向け最適化の前段階。</p>
+                    </div>
+                    <div class="open-btn">開く</div>
+                </a>
+
+                <a href="archives/v0.3.x/index.html" class="card">
+                    <div>
+                        <span class="ver-badge ver-legacy">Ver.0.3.x</span>
+                        <span class="ver-badge">AEGIS</span>
+                        <h3>SSL / HTTPS</h3>
+                        <p>SSL化対応、リダイレクト実装。</p>
+                    </div>
+                    <div class="open-btn">開く</div>
+                </a>
+
+                <a href="archives/v0.2.x/index.html" class="card">
+                    <div>
+                        <span class="ver-badge ver-legacy">Ver.0.2.x</span>
+                        <span class="ver-badge">ARCHITECT</span>
+                        <h3>Products Page</h3>
+                        <p>制作物ページの追加。</p>
+                    </div>
+                    <div class="open-btn">開く</div>
+                </a>
+
+                <a href="archives/v0.1.x/index.html" class="card">
+                    <div>
+                        <span class="ver-badge ver-legacy">Ver.0.0.x</span>
+                        <span class="ver-badge">GENESIS</span>
+                        <h3>Create web page</h3>
+                        <p>プロジェクト始動。初期プロトタイプ。</p>
+                    </div>
+                    <div class="open-btn">開く</div>
+                </a>
+            </div>
+        </section>
+        
+    </section>
+
+    </div>
+
+</body>
+</html>

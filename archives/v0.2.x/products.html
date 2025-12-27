@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>もつ楽公式サイトVer.0.2.3-Dev</title>
+    <style>
+        /* --- 全体のスタイルとリセット --- */
+        * {
+            box-sizing: border-box;
+        }
+        /* ↓↓↓ 修正点 1 ↓↓↓ */
+        html {
+            height: 100%;
+        }
+        body {
+            height: 100%; /* 高さを100%に */
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: #f0f0f0;
+            display: flex; /* Flexコンテナ化 */
+            flex-direction: column; /* 要素を縦に並べる */
+        }
+        /* ↑↑↑ 修正点 1 ↑↑↑ */
+
+        /* --- ヘッダーとフッター（画面幅いっぱいに広がる） --- */
+        .header, .footer {
+            width: 100%;
+            background-color: #fffaf0;
+            flex-shrink: 0; /* ヘッダーとフッターが縮まないようにする */
+        }
+
+        /* --- コンテンツを中央に配置するラッパー --- */
+        .content-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* --- ヘッダー --- */
+        .header {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .header-top {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            border: 1px solid #000;
+        }
+        .logo-link {
+            padding: 10px;
+        }
+        .logo-image {
+            height: 60px;
+            width: auto;
+        }
+        .company-info {
+            padding: 10px;
+        }
+        .company-info .company-name {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .header-nav {
+            background-color: #eee;
+            margin-top: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+        .header-nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #333;
+        }
+        /*空白なし改行*/
+        .text-preline{
+            white-space: pre-line;
+        }
+
+        /* --- メインコンテンツエリア --- */
+        /* ↓↓↓ 修正点 2 ↓↓↓ */
+        .main-container {
+            flex: 1; /* 空きスペースを埋めるように伸ばす */
+            width: 100%;
+            background-color: #fffaf0;
+        }
+        .main-content {
+            display: flex;
+            height: 100%; /* 親の高さに合わせる */
+            padding-top: 20px;
+            padding-bottom: 20px; /* 下にも余白を戻す */
+        }
+        /* ↑↑↑ 修正点 2 ↑↑↑ */
+        .content {
+            flex: 1;
+            min-width: 0;
+            margin-right: 20px;
+            display: flex; /* 子要素を均等に伸ばすためにFlex化 */
+            flex-direction: column; /* 縦に並べる */
+        }
+        .sidebar {
+            width: 300px;
+            display: flex; /* 子要素を均等に伸ばすためにFlex化 */
+            flex-direction: column; /* 縦に並べる */
+        }
+        /* ---コンテンツの中央配置*/
+        .center{
+            text-align: center;
+        }
+        /*pによる改行時の行間調整*/
+        .p{
+            margin-top: 1em;
+        }
+        /*画像リサイズ*/
+        .resizeimage{
+            width: 75%;
+        }
+        .resizeimage_img{
+            height: 75%;
+        }
+
+        /* --- 左側コンテンツの各セクション --- */
+        .image-with-text, .top-story, .text-box {
+            border: 1px dashed #999;
+            padding: 20px;
+            flex: 1; /* ← この指定で均等に伸びます */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 中身を中央寄せ（お好みで） */
+        }
+        .image-with-text, .top-story {
+             margin-bottom: 20px;
+        }
+
+        .top-story {
+             border-style: solid;
+             border-color: #ccc;
+        }
+        .top-story h3 {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .story-body {
+            display: flex;
+            align-items: flex-start;
+        }
+        .story-body img {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ccc;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        /* --- サイドバー（右側）--- */
+        .sidebar-section {
+            border: 1px solid #ccc;
+            padding: 15px;
+            flex: 1; /* ← この指定で均等に伸びます */
+        }
+        .sidebar-section:first-child {
+            margin-bottom: 20px;
+        }
+        .sidebar-section h4 {
+            margin-top: 0;
+        }
+        .youtube-embed {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            background-color: #e0e0e0;
+            margin-bottom: 10px;
+        }
+        .youtube-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .sidebar-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar-section ul li {
+            margin-bottom: 8px;
+        }
+
+        /* --- フッター --- */
+        .footer {
+            border-top: 2px solid #000;
+        }
+        .footer .content-wrapper {
+             padding-top: 20px;
+             padding-bottom: 20px;
+             text-align: center;
+        }
+        .footer-links {
+            margin-bottom: 15px;
+        }
+        .footer-links a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 10px;
+            vertical-align: middle;
+        }
+        .footer-links img.social-icon {
+            width: 32px;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        /* --- レスポンシブ対応 (メディアクエリ) --- */
+        @media (max-width: 768px) {
+            body {
+                height: auto; /* スマホでは高さ固定を解除 */
+            }
+            .main-content {
+                flex-direction: column;
+                height: auto;
+            }
+            .content {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            .sidebar {
+                width: 100%;
+            }
+            .story-body {
+                flex-direction: column;
+            }
+            .story-body img {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VM2JH5QT03"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VM2JH5QT03');
+</script>
+
+<body>
+
+    <header class="header">
+        <div class="content-wrapper">
+            <div class="header-top">
+                <a href="/" class="logo-link">
+                    <img src="image/headerlogo.jpg" alt="Company Logo" class="logo-image">
+                </a>
+                <!--ヘッダー-->
+                <div class="company-info">
+                    <div class="company-name">もつ楽公式サイト(Ver.0.2.3-Dev)</div>
+                    <div class="description">サイトイメージ</div>
+                </div>
+            </div>
+            <!--ヘッダー項目-->
+             <nav class="header-nav">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="#">Support</a>
+                <a href="#">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="content-wrapper" style="height: 100%;">
+            <div class="main-content">
+
+                <!--画像付きテキスト-->
+                <main class="content">
+                    <section class="image-with-text">
+                        <txt>もつ楽のSNS、製品はこちら</txt>
+                        <ul>
+                        <p>もつ楽ラジオ放送局 Made by まほまる</p>
+                        
+                        <div class="youtube-embed">
+                             <iframe max-width="100%" height="auto" src="https://www.youtube.com/embed/?list=UUFOwm7Xgwb36ko8w6kFmBjQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <li>ラジオ形式の動画</li>
+                        <p></p>
+
+                        <p>STUDIO MARX Made by パヤ爺</p>
+                        <div class="youtube-embed">
+                             <iframe max-width="100%" height="auto" src="https://www.youtube.com/embed/?list=UUYyyjW5c7uuMxVkHVGb039Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <li>ミュージックビデオ制作</li>
+                        <li>INEログマネージャー</li>
+                        <li>Webサイト運営</li>
+                        <p></p>
+
+                        <p>LINEログマネージャー Made by パヤ爺</p>
+                        <p>(下にスクロールしてください)</p>
+                        
+                        <iframe src="https://sparc64-hermes-xp-2025.hf.space" width="100%" height="450"></iframe>
+                        <a href="https://sparc64-hermes-xp-2025.hf.space">フルサイズで使う場合はこちら</a>
+                        <p>※LINEブラウザではダウンロード不可</p>
+                        </ul>
+    <!--フッター-->
+    <footer class="footer">
+        <div class="content-wrapper">
+            <div class="footer-links">
+                <a href="Server-info.html">このサイトについて</a>
+                <!--Youtube,LINEリンク-->
+                <a href="https://www.youtube.com/@motsulakuradio" target="_blank"><img src="image/YT-Logo.png" alt="Youtube" class="social-icon"></a>
+                <a href="https://line.me/ti/g2/fNG0xLERQMhb2DdxRePYU7AVBeMGdDMT3Gbkqg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank"><img src="image/LINE.png" alt="LINE" class="social-icon"></a>
+            </div>
+            <!--コピーライト-->
+            <p class="copyright">© 2025 STUDIO MARX. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

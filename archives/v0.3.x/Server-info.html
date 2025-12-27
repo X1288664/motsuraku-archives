@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サーバー情報 - もつ楽公式サイト(Ver.0.3.3-Dev)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /*==================================================
+        基本設定
+        ==================================================*/
+        :root {
+            --base-color: #FFFFFF; --background-color: #f4f6f9; --text-color: #333333;
+            --accent-color: #007bff; --border-color: #e0e0e0; --footer-bg-color: #2c3e50;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; font-family: 'Noto Sans JP', sans-serif; color: var(--text-color); background-color: var(--background-color); }
+        a { color: var(--accent-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        img { max-width: 100%; height: auto; vertical-align: middle; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /*==================================================
+        ヘッダー
+        ==================================================*/
+        .site-header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background-color: var(--base-color); padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .site-header.has-scrolled {
+            background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        body { padding-top: 82px; }
+
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .site-branding { display: flex; align-items: center; }
+        .site-logo img { height: 50px; margin-right: 15px; }
+        .site-title { font-size: 1.5em; font-weight: bold; margin: 0; }
+        .site-description { font-size: 0.9em; color: #777; margin: 0; }
+
+        /*==================================================
+        ナビゲーション
+        ==================================================*/
+        .main-navigation { position: relative; }
+        .menu-toggle {
+            display: block; width: 40px; height: 40px; border: none; background: transparent;
+            cursor: pointer; padding: 0; z-index: 20;
+        }
+        .menu-toggle span {
+            display: block; width: 24px; height: 2px; background-color: #333;
+            margin: 6px auto; transition: all 0.3s ease-in-out;
+        }
+        .menu-container {
+            display: block; position: absolute; top: calc(100% + 15px); right: 0;
+            width: 200px; background-color: white; border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); padding: 10px 0;
+            opacity: 0; transform: translateY(10px); visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        }
+        .menu-container a { display: block; padding: 12px 20px; }
+        .menu-container.is-open { opacity: 1; transform: translateY(0); visibility: visible; }
+        .menu-toggle.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .menu-toggle.is-active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        
+        /*==================================================
+        メインコンテンツ
+        ==================================================*/
+        .site-content { padding-top: 40px; padding-bottom: 40px; }
+        .card { background-color: var(--base-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; box-shadow: 0 2px 5px rgba(0,0,0,0.04); margin-bottom: 30px; }
+        .page-title { margin-top: 0; font-size: 2em; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; }
+        .card h2 { margin-top: 0; font-size: 1.6em; }
+        
+        /* テキストの改行を維持するスタイル */
+        .text-pre-line {
+            white-space: pre-line;
+            line-height: 1.8;
+        }
+        .server-spec-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .server-spec-list > li {
+            margin-bottom: 10px;
+        }
+        
+        /*==================================================
+        フッター
+        ==================================================*/
+        .site-footer { background-color: var(--footer-bg-color); color: #fff; padding: 30px 0; text-align: center; font-size: 0.9em; }
+        .footer-links { margin-bottom: 15px; }
+        .footer-links a { color: #fff; margin: 0 10px; }
+        .footer-social-icons img { height: 24px; width: auto; margin: 0 8px; opacity: 0.8; transition: opacity 0.2s; }
+        .footer-social-icons img:hover { opacity: 1; }
+        
+        /*==================================================
+        レスポンシブ対応
+        ==================================================*/
+        @media (max-width: 768px) {
+            .site-title { font-size: 1.2em; }
+            .site-logo img { height: 40px; }
+            body { padding-top: 72px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header" id="siteHeader">
+        <div class="container header-inner">
+            <div class="site-branding">
+                <a href="index.html" class="site-logo"><img src="image/headerlogo.jpg" alt="もつ楽 ロゴ"></a>
+                <div>
+                    <h1 class="site-title">もつ楽公式サイト</h1>
+                    <p class="site-description">(Ver.0.3.3-Dev)</p>
+                </div>
+            </div>
+            <nav class="main-navigation">
+                <button class="menu-toggle" id="menuToggle" aria-label="メニューを開閉">
+                    <span></span><span></span><span></span>
+                </button>
+                <div class="menu-container" id="menuContainer">
+                    <a href="index.html">Home</a>
+                    <a href="products.html">Products</a>
+                    <a href="#">Support</a>
+                    <a href="#">Profile</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-content">
+        <div class="container">
+            <h1 class="page-title">このサイトについて</h1>
+            
+            <div class="card">
+                <h2>サーバー情報</h2>
+                <img src="image/IIS logo.png" alt="IIS Logo" style="max-width: 100%; height: auto;">
+                <txt>※画像はオリジナル制作です</txt>
+                <p>このWebサイトは、個人宅のサーバーでMicrosoftのIIS(Internet Information Services)を利用して運営しています。</p>
+                <ul class="server-spec-list">
+                    <li><strong>OS:</strong> Windows11 Home</li>
+                    <li><strong>CPU:</strong> Intel N100 4Core 3.4GHz</li>
+                    <li><strong>RAM:</strong> DDR4 3200MHz 16GB</li>
+                    <li><strong>Storage:</strong>
+                        <p class="text-pre-line">
+                            C:/ 238GB (NVMe 2280, Main)
+                            D:/ 476GB (2.5 inch SSD, NAS01)
+                            E:/ 476GB (2.5 inch SSD, NAS02)
+                            F:/ 931GB (3.5 inch HDD, NAS03)
+                            G:/ 931GB (3.5 inch HDD, NAS04)
+                            H:/ 238GB (M.2 2280, Windows Backup)
+                            I:/ 118GB (2.5 inch SSD, for IIS)
+                        </p>
+                    </li>
+                    <li><strong>使用サービス:</strong> Microsoft IIS</li>
+                </ul>
+                <p><small>※サーバーの安定稼働のため、最大同時アクセス数を20に制限しています。</small></p>
+            </div>
+            
+            <div class="card">
+                <h2>見出し2 (準備中)</h2>
+                <p>新しい内容は、このようにカードを追加していくことで、簡単にページを拡張できます。</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="Server-info.html">このサイトについて</a>
+                <span class="footer-social-icons">
+                    <a href="https://www.youtube.com/@motsulakuradio"><img src="image/YT-Logo.png" alt="Youtube"></a>
+                    <a href="https://line.me/ti/g2/fNG0xLERQMhb2DdxRePYU7AVBeMGdDMT3Gbkqg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"><img src="image/LINE.png" alt="LINE"></a>
+                </span>
+            </div>
+            <p>© 2025 STUDIO MARX. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const siteHeader = document.getElementById('siteHeader');
+            const menuToggle = document.getElementById('menuToggle');
+            const menuContainer = document.getElementById('menuContainer');
+            if (siteHeader) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 10) { 
+                        siteHeader.classList.add('has-scrolled');
+                    } else {
+                        siteHeader.classList.remove('has-scrolled');
+                    }
+                });
+            }
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    menuToggle.classList.toggle('is-active');
+                    menuContainer.classList.toggle('is-open');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

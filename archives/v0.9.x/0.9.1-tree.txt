@@ -1,0 +1,142 @@
+フォルダー パスの一覧
+ボリューム シリアル番号は 3E5F-04F4 です
+C:.
+│  .gitattributes
+│  .gitignore
+│  404.html
+│  creator-data-old.html
+│  creator-data.html
+│  creators.html
+│  CSS内のクラス名役割リスト.txt
+│  index.html
+│  log.txt
+│  manifest.json
+│  members.html
+│  products.html
+│  profile-old.html
+│  Profile-server-manager.html
+│  profile.html
+│  robots.txt
+│  server.html
+│  sitemap.xml
+│  tree.txt
+│  update.html
+│  web.config
+│  サイトマップについて.txt
+│  サブページテンプレート.html
+│  バージョン表記について.txt
+│  メモ.txt
+│  
+├─creators
+│      creator-profile-mahomaru.html
+│      creator-profile-test88g-.html
+│      creators-profile-template.html
+│      
+├─CSS
+│      .gitattributes
+│      style - バックアップ.css.txt
+│      style.css
+│      コントロールパネルへの新しい項目の追加方法.md
+│      
+├─image
+│  │  404-1.webp
+│  │  404.webp
+│  │  backup-IIS logo.png
+│  │  character.png
+│  │  Debug-Black.webp
+│  │  github-mark-white.png
+│  │  github-mark-white.svg
+│  │  github-mark.png
+│  │  github-mark.svg
+│  │  headerlogo.jpg
+│  │  IIS logo.png
+│  │  KB-WDX.jpg
+│  │  kirby-DLC.webp
+│  │  LINE.png
+│  │  LLM-Logo.png
+│  │  motsuraku-QR.png
+│  │  profile-icon-wide.png
+│  │  profile-icon.png
+│  │  redirect-check.jpeg
+│  │  sitemapxml.png
+│  │  test-1.png
+│  │  test.jpg
+│  │  Thumbs.db
+│  │  YT-Logo.png
+│  │  
+│  ├─gallery
+│  │  │  gallery_For_Desktop-Event_AIR_RIDERS.png
+│  │  │  gallery_For_Desktop-management_Team.png
+│  │  │  gallery_For_Desktop_Welcome_to_Motsuraku.png
+│  │  │  gallery_For_Mobile-Event_AIR_RIDERS.png
+│  │  │  gallery_For_Mobile-Management_Team.png
+│  │  │  gallery_For_Mobile_Welcome_to_Motsuraku.png
+│  │  │  img4.png
+│  │  │  
+│  │  ├─finalEdited
+│  │  │      Debug-Black.webp
+│  │  │      gallery_For_Desktop-Event_AIR_RIDERS.webp
+│  │  │      gallery_For_Desktop-management_Team.webp
+│  │  │      gallery_For_Desktop_Welcome_to_Motsuraku.webp
+│  │  │      image1.webp
+│  │  │      image2.webp
+│  │  │      image3.webp
+│  │  │      
+│  │  ├─mobile
+│  │  │      gallery_For_Mobile-Event_AIR_RIDERS.webp
+│  │  │      gallery_For_Mobile-Management_Team.webp
+│  │  │      gallery_For_Mobile_Welcome_to_Motsuraku.webp
+│  │  │      mobile-Debug-Black.webp
+│  │  │      mobile-image1.webp
+│  │  │      mobile-image2.webp
+│  │  │      
+│  │  └─元画像
+│  │          KB-WDX.jpg
+│  │          kirby-DLC.webp
+│  │          
+│  ├─illustrations
+│  │  ├─full
+│  │  │      image1.png
+│  │  │      image2.jpg
+│  │  │      image3.webp
+│  │  │      
+│  │  └─thumb
+│  │          image1.png
+│  │          image2.jpg
+│  │          image3.webp
+│  │          
+│  ├─main-Visual
+│  │      1900-690.webp
+│  │      
+│  └─members
+│          EL_03_MAH.webp
+│          HP_03_RPR.webp
+│          HP_04_PYG.webp
+│          paya-g.webp
+│          XX_00_Def.webp
+│          
+├─JavaScript
+│      creators.js
+│      members.js
+│      script.js
+│      
+├─members
+│      member-profile-Epsilon.html
+│      member-profile-mahomaru.html
+│      member-profile-mosuWO.html
+│      member-profile-template.html
+│      member-profile-test-illust-include.html
+│      member-profile-test88g-.html
+│      
+├─my-favicon
+│      apple-touch-icon.png
+│      favicon-96x96.png
+│      favicon.ico
+│      favicon.svg
+│      manifest.json
+│      web-app-manifest-192x192.png
+│      web-app-manifest-512x512.png
+│      
+└─videos
+        Kirby-Demo-keyvisual.mp4
+        

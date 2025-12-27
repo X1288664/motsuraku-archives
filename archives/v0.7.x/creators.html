@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クリエイター紹介 - もつ楽公式サイト</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/style.css">
+    
+    <link rel="icon" href="my-favicon/favicon.ico">
+    <link rel="apple-touch-icon" href="image/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="site-branding">
+                <a href="index.html" class="site-logo"><img src="image/headerlogo.jpg" alt="もつ楽公式サイト ロゴ"></a>
+                <div>
+                    <h1 class="site-title">もつ楽公式サイト</h1>
+                    <p class="site-description">(Ver.0.7.0-Beta+GhP)</p>
+                </div>
+</div>
+            <nav class="main-navigation" style="display: flex; align-items: center; gap: 10px;">
+
+    <button id="theme-toggle" class="theme-btn" aria-label="ダークモード切替">
+        🌙
+    </button>
+            <nav class="main-navigation">
+                <button class="menu-toggle">メニュー▼</button>
+                <div class="menu-container">
+                    <a href="products.html">制作物</a>
+                    <a href="update.html">更新履歴</a>
+                    <a href="Profile-server-manager.html">サイト管理者プロフィール</a>
+                    <a href="Server-info.html">このサイトについて</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-content">
+        <div class="container">
+            <h2 class="page-title">クリエイター紹介</h2>
+            
+            <div id="creator-list" class="member-grid">
+                </div>
+
+            <nav id="pagination" class="pagination-container" aria-label="ページナビゲーション"></nav>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="Server-info.html">このサイトについて</a>
+                <span class="footer-social-icons">
+                    <a href="https://www.youtube.com/@motsulakuradio"><img src="image/YT-Logo.png" alt="Youtube"></a>
+                    <a href="https://line.me/ti/g2/fNG0xLERQMhb2DdxRePYU7AVBeMGdDMT3Gbkqg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"><img src="image/LINE.png" alt="LINE"></a>
+                    <a href="http://www.sitemapxml.jp/" target="_blank"><img src="image/sitemapxml.png" width="117" height="14" alt="sitemap.xml自動生成ツール" /></a>
+                </span>
+            </div>
+            <p>© 2025 STUDIO MARX</p>
+        </div>
+    </footer>
+
+    <script src="JavaScript/script.js"></script>
+    <script src="JavaScript/creators.js"></script>
+    
+    <script>
+        // 設定
+        const itemsPerPage = 6;
+        const listContainer = document.getElementById('creator-list');
+        const paginationContainer = document.getElementById('pagination');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentPage = parseInt(urlParams.get('page')) || 1;
+
+        function renderCreators() {
+            // creatorsData が存在するか確認
+            if (typeof creatorsData === 'undefined') {
+                console.error("creators.js が読み込まれていません");
+                return;
+            }
+
+            listContainer.innerHTML = ''; 
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = creatorsData.slice(startIndex, endIndex);
+
+            pageData.forEach(creator => {
+                const cardHTML = `
+                    <a href="creator_profile.html?id=${creator.id}" class="member-card">
+                        <div class="member-thumbnail">
+                            <img src="${creator.image}" alt="${creator.name}">
+                        </div>
+                        <div class="member-info">
+                            <h3 class="member-name">${creator.name}</h3>
+                            <p class="member-description">${creator.position}</p>
+                            <p style="font-size:0.8rem; color:#888; margin-top:5px;">${creator.message}</p>
+                        </div>
+                    </a>
+                `;
+                listContainer.insertAdjacentHTML('beforeend', cardHTML);
+            });
+
+            renderPagination();
+        }
+
+        function renderPagination() {
+            paginationContainer.innerHTML = '';
+            const totalPages = Math.ceil(creatorsData.length / itemsPerPage);
+
+            if (totalPages <= 1) return;
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('a');
+                btn.href = `?page=${i}`;
+                btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                btn.textContent = i;
+                paginationContainer.appendChild(btn);
+            }
+        }
+
+        renderCreators();
+    </script>
+
+</body>
+</html>

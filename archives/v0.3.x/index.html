@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>もつ楽公式サイト(Ver.0.3.3-Dev)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /*==================================================
+        基本設定
+        ==================================================*/
+        :root {
+            --base-color: #FFFFFF; --background-color: #f4f6f9; --text-color: #333333;
+            --accent-color: #007bff; --border-color: #e0e0e0; --footer-bg-color: #2c3e50;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; font-family: 'Noto Sans JP', sans-serif; color: var(--text-color); background-color: var(--background-color); }
+        a { color: var(--accent-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        img { max-width: 100%; height: auto; vertical-align: middle; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /*==================================================
+        ヘッダー (変更点1)
+        ==================================================*/
+        .site-header {
+            position: fixed; /* 最初から固定 */
+            top: 0; left: 0; width: 100%;
+            z-index: 1000;
+            background-color: var(--base-color);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        /* スクロール時に背景を半透明にする */
+        .site-header.has-scrolled {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        /* 固定ヘッダーがコンテンツに被るのを防ぐ */
+        body {
+            padding-top: 82px; /* ヘッダーの高さ分、余白を設ける */
+        }
+
+        .header-inner { display: flex; justify-content: space-between; align-items: center; }
+        .site-branding { display: flex; align-items: center; }
+        .site-logo img { height: 50px; margin-right: 15px; }
+        .site-title { font-size: 1.5em; font-weight: bold; margin: 0; }
+        .site-description { font-size: 0.9em; color: #777; margin: 0; }
+
+        /*==================================================
+        ナビゲーション (変更点2)
+        ==================================================*/
+        .main-navigation { position: relative; } /* ドロップダウンの基準位置 */
+        .menu-toggle {
+            display: block; /* 最初から表示 */
+            width: 40px; height: 40px; border: none; background: transparent;
+            cursor: pointer; padding: 0; z-index: 20;
+        }
+        .menu-toggle span {
+            display: block; width: 24px; height: 2px; background-color: #333;
+            margin: 6px auto; transition: all 0.3s ease-in-out;
+        }
+        /* --- プルダウンメニュー --- */
+        .menu-container {
+            display: block; /* display:flexをやめる */
+            position: absolute;
+            top: calc(100% + 15px); /* ボタンの少し下 */
+            right: 0;
+            width: 200px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            padding: 10px 0;
+            /* アニメーション */
+            opacity: 0;
+            transform: translateY(10px);
+            visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        }
+        .menu-container a {
+            display: block; /* 縦並びにする */
+            padding: 12px 20px;
+        }
+        /* --- メニューが開いた時のスタイル --- */
+        .menu-container.is-open {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+        /* --- ハンガーガーアイコンが「×」になるアニメーション --- */
+        .menu-toggle.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .menu-toggle.is-active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /*==================================================
+        キービジュアル
+        ==================================================*/
+        .hero-fullscreen {
+            position: relative; width: 100%; height: calc(70vh - 82px); /* ヘッダーの高さを引く */
+            min-height: 450px; color: #fff; background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            background-image: url("image/KB-WDX.jpg");
+        }
+        .hero-fullscreen::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
+        .hero-content { position: relative; padding: 20px; }
+        .hero-title { font-size: 3em; font-weight: bold; margin-top: 0; margin-bottom: 0.5em; }
+        .hero-subtitle { font-size: 1.2em; margin: 0; max-width: 600px; }
+        
+        /*==================================================
+        メインコンテンツ
+        ==================================================*/
+        .site-content { padding-top: 40px; padding-bottom: 40px; }
+        .content-grid { display: flex; gap: 30px; }
+        .main-column { flex: 3; }
+        .sidebar-column { flex: 1; }
+        .full-bleed-image { border-radius: 8px; margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+        .card { background-color: var(--base-color); border: 1px solid var(--border-color); border-radius: 8px; padding: 24px; box-shadow: 0 2px 5px rgba(0,0,0,0.04); margin-bottom: 30px; }
+        .card h2 { margin-top: 0; font-size: 1.6em; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 20px; }
+        .sidebar-widget { margin-bottom: 30px; }
+        .sidebar-widget h3 { font-size: 1.2em; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); margin-top: 0; margin-bottom: 15px; }
+        .sidebar-widget ul { list-style: none; padding: 0; }
+        .sidebar-widget ul li a { display: block; padding: 8px 0; }
+        .update-list { list-style: none; padding-left: 0; }
+        .update-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+        .update-list li:last-child { border-bottom: none; }
+        
+        /* --- YouTubeレスポンシブ対応 (変更点3) --- */
+        .youtube-container {
+            position: relative; width: 100%; height: 0;
+            padding-bottom: 56.25%; /* 16:9 */
+            overflow: hidden; background-color: #000;
+        }
+        .youtube-container iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+        
+        /*==================================================
+        フッター
+        ==================================================*/
+        .site-footer { background-color: var(--footer-bg-color); color: #fff; padding: 30px 0; text-align: center; font-size: 0.9em; }
+        .footer-links { margin-bottom: 15px; }
+        .footer-links a { color: #fff; margin: 0 10px; }
+        .footer-social-icons img { height: 24px; width: auto; margin: 0 8px; opacity: 0.8; transition: opacity 0.2s; }
+        .footer-social-icons img:hover { opacity: 1; }
+        
+        /*==================================================
+        レスポンシブ対応
+        ==================================================*/
+        @media (max-width: 768px) {
+            .content-grid { flex-direction: column; }
+            /* スマホではロゴとサイト名を少し小さく */
+            .site-title { font-size: 1.2em; }
+            .site-logo img { height: 40px; }
+            body { padding-top: 72px; }
+            .hero-title { font-size: 2em; }
+            .hero-subtitle { font-size: 1em; }
+        }
+    </style>
+    
+</head>
+
+<body>
+
+    <header class="site-header" id="siteHeader">
+        <div class="container header-inner">
+            <div class="site-branding">
+                <a href="index.html" class="site-logo"><img src="image/headerlogo.jpg" alt="もつ楽 ロゴ"></a>
+                <div>
+                    <h1 class="site-title">もつ楽公式サイト</h1>
+                    <p class="site-description">(Ver.0.3.3-Dev)</p>
+                </div>
+            </div>
+            <nav class="main-navigation">
+                <button class="menu-toggle" id="menuToggle" aria-label="メニューを開閉">
+                    <span></span><span></span><span></span>
+                </button>
+                <div class="menu-container" id="menuContainer">
+                    <a href="index.html">Home</a>
+                    <a href="products.html">Products</a>
+                    <a href="#">Support</a>
+                    <a href="#">Profile</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-fullscreen">
+        <div class="hero-content">
+            <h2 class="hero-title">タイトル</h2>
+            <p class="hero-subtitle">ここにサイトを象徴するキャッチコピーや説明文を配置します。</p>
+        </div>
+    </section>
+
+    <main class="site-content">
+        <div class="container content-grid">
+            <div class="main-column">
+                <img src="image/KB-WDX.jpg" alt="メインビジュアル" class="full-bleed-image">
+                <section class="card">
+                    <h2>画像付きテキスト</h2>
+                    <p>ここにサイトのメインとなる文章や説明を記述します。清潔感と読みやすさを重視したデザインです。</p>
+                </section>
+                <section class="card">
+                    <h2>最近の更新</h2>
+                    <ul class="update-list">
+                        <li>Ver.0.3.3-Dev - HTTPS、SSL化&HTTPからのリダイレクト、ファビコンを実装(2025/07/17)</li>
+                        <li>Ver.0.3.2-Dev - 各デバイスでの表示の不具合を修正(2025/07/17)</li>
+                        <li>Ver.0.3.1-Dev - UIの中規模アップデート(2025/07/16)</li>
+                        <li>Ver.0.3.0-Dev - UIを刷新 (2025/07/16)</li>
+                        <li>Ver.0.2.3-Dev - 製品ページの追加 (2025/07/14)</li>
+                        <li>Ver.0.2.2-Dev - このサイトについてページを追加 (2025/07/13)</li>
+                        <li>Ver.0.2.0-Dev - Dev版初リリース (2025/07/09)</li>
+                    </ul>
+                </section>
+                <section class="card">
+                    <h2>テキストボックス</h2>
+                    <p>ここは自由な内容を記述できるテキストボックスです。余白を適切に取ることで、非常に読みやすくなります。</p>
+                </section>
+            </div>
+            <aside class="sidebar-column">
+                <section class="sidebar-widget">
+                    <h3>Social</h3>
+                    <p>もつ楽公式チャンネルはこちら</p>
+                    <div class="youtube-container">
+                         <iframe src="https://www.youtube.com/embed/?list=UUFOwm7Xgwb36ko8w6kFmBjQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <h3 style="margin-top:20px;">オープンチャットはこちら</h3>
+                    <a href="https://line.me/ti/g2/fNG0xLERQMhb2DdxRePYU7AVBeMGdDMT3Gbkqg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"><img src="image/motsuraku-QR.png" alt="LINEオープンチャットQRコード"></a>
+                </section>
+                <section class="sidebar-widget">
+                    <h3>Navigate</h3>
+                    <ul>
+                        <li><a href="#">ハイパーリンク１</a></li>
+                        <li><a href="#">ハイパーリンク２</a></li>
+                    </ul>
+                </section>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="Server-info.html">このサイトについて</a>
+                <span class="footer-social-icons">
+                    <a href="https://www.youtube.com/@motsulakuradio"><img src="image/YT-Logo.png" alt="Youtube"></a>
+                    <a href="https://line.me/ti/g2/fNG0xLERQMhb2DdxRePYU7AVBeMGdDMT3Gbkqg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"><img src="image/LINE.png" alt="LINE"></a>
+                </span>
+            </div>
+            <p>© 2025 STUDIO MARX. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const siteHeader = document.getElementById('siteHeader');
+            const menuToggle = document.getElementById('menuToggle');
+            const menuContainer = document.getElementById('menuContainer');
+
+            // --- スクロール時のヘッダー表示切り替え ---
+            if (siteHeader) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 10) { // 10pxでもスクロールしたら
+                        siteHeader.classList.add('has-scrolled');
+                    } else {
+                        siteHeader.classList.remove('has-scrolled');
+                    }
+                });
+            }
+
+            // --- メニューボタンクリック時のプルダウン表示切り替え ---
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    menuToggle.classList.toggle('is-active');
+                    menuContainer.classList.toggle('is-open');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
