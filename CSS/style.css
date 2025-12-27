@@ -1,146 +1,230 @@
-/* アーカイブページ専用の簡易スタイル */
-        :root {
-            --bg-color: #f4f6f9;
-            --card-bg: #ffffff;
-            --text-color: #333;
-            --accent-color: #007bff;
-        }
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: #121212;
-                --card-bg: #1f1f1f;
-                --text-color: #e0e0e0;
-            }
-        }
+/* =========================================
+   1. 基本設定（変数定義）
+   ========================================= */
+:root {
+    /* ライトモード（デフォルト） */
+    --bg-color: #f4f6f9;
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --accent-color: #007bff; /* 青 */
+    --header-bg: #ffffff;
+    --footer-bg: #f9f9f9;
+    --border-color: rgba(128,128,128,0.2);
+    --note-bg: rgba(255, 255, 0, 0.1);
+    --note-border: rgba(255, 255, 0, 0.3);
+}
 
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+/* ダークモード（JSでクラスがついた時） */
+body.dark-mode {
+    --bg-color: #121212;
+    --card-bg: #1f1f1f;
+    --text-color: #e0e0e0;
+    --accent-color: #66b2ff; /* 明るい水色 */
+    --header-bg: #1f1f1f;
+    --footer-bg: #1a1a1a;
+    --border-color: rgba(255,255,255,0.1);
+    --note-bg: rgba(255, 255, 0, 0.05);
+    --note-border: rgba(255, 255, 0, 0.1);
+}
 
-        .header {
-            background-color: var(--card-bg);
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid #ccc;
-            margin-bottom: 40px;
-        }
-        .header h1 { margin: 0; font-size: 1.8rem; }
-        .header p { color: #cccccc; font-size: 0.9rem; }
+/* =========================================
+   2. 全体のレイアウト
+   ========================================= */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Noto Sans JP', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s; /* ふわっと切り替え */
+}
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px 60px;
-        }
+/* リンクの基本スタイル */
+a {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+.card, .btn {
+    text-decoration: none; /* カード等は下線なし */
+}
 
-        .timeline-section {
-            margin-bottom: 50px;
-        }
-        .section-title {
-            font-size: 1.4rem;
-            border-left: 5px solid var(--accent-color);
-            padding-left: 15px;
-            margin-bottom: 20px;
-        }
+/* =========================================
+   3. ヘッダーとボタン
+   ========================================= */
+.header {
+    background-color: var(--header-bg); /* 変数を使用 */
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 40px;
+    position: relative; /* ボタン配置用 */
+}
+.header h1 { margin: 0; font-size: 1.8rem; }
+.header p { color: #888; font-size: 0.9rem; }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
+/* --- 切り替えボタンのスタイル（右下固定版） --- */
+.theme-btn {
+    /* 1. 配置の設定 */
+    position: fixed;       /* 画面に対して固定する */
+    bottom: 30px;          /* 下から30px */
+    right: 30px;           /* 右から30px */
+    top: auto;             /* 上の設定をリセット */
+    z-index: 1000;         /* 他の要素より手前に表示 */
 
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-            border: 1px solid rgba(128,128,128,0.2);
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+    /* 2. 見た目の設定 */
+    width: 50px;           /* 少し大きくして押しやすく */
+    height: 50px;
+    font-size: 1.5rem;
+    border-radius: 50%;    /* 完全な丸 */
+    cursor: pointer;
+    
+    /* 3. 色と影（浮いているように見せる） */
+    background-color: var(--card-bg); /* 背景色をつける（透けないように） */
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* 影をつける */
+    
+    /* 4. アニメーション */
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .ver-badge {
-            display: inline-block;
-            background-color: #666;
-            color: #fff;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-            font-family: monospace;
-        }
-        .ver-latest { background-color: var(--accent-color); }
-        .ver-legacy { background-color: #8e44ad; } /* 紫 */
+/* ホバー時の動き */
+.theme-btn:hover {
+    transform: translateY(-5px); /* ふわっと浮き上がる */
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    background-color: var(--card-bg); /* 背景色は維持 */
+}
 
-        .card h3 { margin: 0 0 10px 0; font-size: 1.2rem; }
-        .card p { font-size: 0.9rem; color: #cccccc; margin: 0 0 15px 0; }
-        
-        .open-btn {
-            text-align: center;
-            background-color: transparent;
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 8px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-        .card:hover .open-btn {
-            background-color: var(--accent-color);
-            color: #fff;
-        }
+/* スマホでの微調整（邪魔にならないよう少し小さく） */
+@media (max-width: 768px) {
+    .theme-btn {
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 1.2rem;
+    }
+}
 
-        .note {
-            background-color: rgba(255, 255, 0, 0.1);
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 0, 0.3);
-        }
-        /* メインビジュアル用スタイル */
+/* =========================================
+   4. コンテンツエリア
+   ========================================= */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+}
+
+/* メインビジュアル */
 .hero-image-wrapper {
-    margin-bottom: 40px; /* 下の要素との隙間 */
-    text-align: center;  /* 画像を中央寄せ */
+    margin-bottom: 40px;
+    text-align: center;
 }
-
 .hero-image {
-    width: 100%;         /* 横幅を親要素(カードと同じ幅)いっぱいに */
-    max-width: 100%;     /* スマホではみ出さないようにする */
-    height: auto;        /* 高さは横幅に合わせて自動調整(16:9を維持) */
-    border-radius: 0px;  /* 角を少し丸くしてデザインを合わせる */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* 影をつけて浮き上がらせる */
-    display: block;      /* 隙間ズレ防止 */
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: block;
 }
-
-/* ダークモード時の微調整（眩しすぎないように少し暗くする） */
 @media (prefers-color-scheme: dark) {
     .hero-image {
         opacity: 0.9;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 }
-/* ▼▼▼ デスクトップ（PC）用のサイズ調整 ▼▼▼ */
-        @media (min-width: 768px) {
-            .hero-image {
-                /* PCでは最大幅を制限して、画面を占領しすぎないようにする */
-                max-width: 600px;  /* ← お好みで 500px ～ 800px くらいに調整してください */
-                width: 70%;        /* または親要素の70%くらいの幅にする */
-                
-                /* 中央に配置するための魔法 */
-                margin-left: auto;
-                margin-right: auto;
-            }
-        }
+/* PC用サイズ調整 */
+@media (min-width: 768px) {
+    .hero-image {
+        max-width: 600px;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* 注意書き */
+.note {
+    background-color: var(--note-bg);
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+    border: 1px solid var(--note-border);
+}
+
+/* =========================================
+   5. タイムライン・カード
+   ========================================= */
+.timeline-section {
+    margin-bottom: 50px;
+}
+.section-title {
+    font-size: 1.4rem;
+    border-left: 5px solid var(--accent-color);
+    padding-left: 15px;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    border: 1px solid var(--border-color);
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.card h3 { margin: 0 0 10px 0; font-size: 1.2rem; }
+.card p { font-size: 0.9rem; color: #888; margin: 0 0 15px 0; }
+/* ダークモード時のpタグ文字色調整 */
+body.dark-mode .card p { color: #cccccc; }
+
+/* バッジ */
+.ver-badge {
+    display: inline-block;
+    background-color: #666;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    font-family: monospace;
+}
+.ver-latest { background-color: var(--accent-color); }
+.ver-legacy { background-color: #8e44ad; }
+
+/* 開くボタン */
+.open-btn {
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.card:hover .open-btn {
+    background-color: var(--accent-color);
+    color: #fff;
+}
